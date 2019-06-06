@@ -1,21 +1,11 @@
 <div class="row">
   <div class="col-lg-6 col-12">
-    <dx-text-area
-      [spellcheck]="false"
-      class="m-2"
-      height="60vh"
-      [(value)]="compilerInfo.script"
-    >
-    </dx-text-area>
+    <textarea class="m-2" [(value)]="compilerInfo.script"> </textarea>
   </div>
   <div class="col-lg-6 col-12">
-    <dx-text-area
-      class="m-2"
-      height="60vh"
-      [readOnly]="true"
-      [(value)]="compiledResult"
-    ></dx-text-area>
+    <textarea class="m-2" [(value)]="compiledResult"></textarea>
   </div>
-  <dx-button class="mx-4 my-2" text="Compile & Run" (click)="compile()">
-  </dx-button>
+  <button mat-raised-button class="mx-4 my-2" (click)="compile()"></button>
+    Compile & Run
+  </button>
 </div>

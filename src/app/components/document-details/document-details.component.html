@@ -1,0 +1,130 @@
+<form #form="ngForm" (ngSubmit)="submit()">
+  <h2>{{ isNew ? "New document" : "Edit document" }}</h2>
+  <mat-divider class="my-3"></mat-divider>
+  <div class="row" *ngIf="document && !isLoading; else loading">
+    <div class="col-md-6 order-md-1 order-2">
+      <mat-form-field class="w-100">
+        <mat-label>Document name</mat-label>
+        <input
+          type="text"
+          matInput
+          id="documentName"
+          name="documentName"
+          [(ngModel)]="document.name"
+          #documentName="ngModel"
+          maxlength="40"
+          required
+        />
+        <mat-hint align="end">{{ document.name.length }} / 40</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="w-100">
+        <mat-label>Status</mat-label>
+        <mat-select [(value)]="document.status" required>
+          <mat-option [value]="true">Enabled</mat-option>
+          <mat-option [value]="false">Disabled</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="w-100">
+        <mat-label>Categories</mat-label>
+        <mat-select
+          multiple
+          [(ngModel)]="document.categories"
+          (selectionChange)="categoryChange()"
+          name="categories"
+        >
+          <mat-option
+            *ngFor="let category of document.categories"
+            [value]="category"
+            >{{ category.name }}</mat-option
+          >
+          <mat-option *ngFor="let category of categories" [value]="category">{{
+            category.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <h4>Categories</h4>
+      <mat-divider class="my-3"></mat-divider>
+      <ng-container *ngIf="document.categories.length > 0; else noCategories">
+        <mat-accordion>
+          <mat-expansion-panel
+            *ngFor="let category of document.categories"
+            class="mb-2"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ category.name }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <ng-container *ngFor="let value of document.values; index as i">
+              <mat-form-field
+                class="w-100"
+                *ngIf="value.field.categoryId === category.id"
+              >
+                <mat-label>{{ value.field.name }}</mat-label>
+                <textarea
+                  matInput
+                  [style.height]="responsiveHeight(value.content)"
+                  [(ngModel)]="value.content"
+                  name="value_{{ i }}"
+                  required
+                ></textarea>
+              </mat-form-field>
+            </ng-container>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ng-container>
+
+      <ng-template #noCategories>
+        <p>No categories yet.</p>
+      </ng-template>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+        class="my-1"
+      >
+        Submit
+      </button>
+    </div>
+    <div class="col-md-6 order-md-2 order-1 my-md-0 mb-3">
+      <mat-card *ngIf="document.name">
+        <mat-card-header>
+          <mat-card-title>
+            {{ document.name }}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="my-5">
+          <p *ngFor="let value of document.values">
+            {{ value.field.name }} - {{ value.content | summary }}
+          </p>
+        </mat-card-content>
+        <mat-card-footer class="m-2">
+          <mat-chip-list>
+            <mat-chip
+              selected
+              [color]="category.status ? 'primary' : 'warn'"
+              *ngFor="let category of document.categories"
+            >
+              {{ category.name }}
+            </mat-chip>
+          </mat-chip-list>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <div
+      style="height: 60vh;"
+      class="w-100 d-flex justify-content-center align-items-center"
+    >
+      <mat-progress-spinner mode="indeterminate" value="50" color="primary">
+      </mat-progress-spinner>
+    </div>
+  </ng-template>
+</form>

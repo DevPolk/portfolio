@@ -1,0 +1,73 @@
+<h2>Categories</h2>
+<hr />
+<ng-container *ngIf="!isLoading; else loading">
+  <mat-form-field class="w-100">
+    <mat-label>Search...</mat-label>
+    <input type="text" matInput (keyup)="filter($event.target)" />
+  </mat-form-field>
+
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8 w-100 mb-3"
+  >
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">
+        <a routerLink="/categories/{{ element.id }}">{{ element.name }}</a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fieldsCount">
+      <th mat-header-cell *matHeaderCellDef>Fields</th>
+      <td mat-cell *matCellDef="let element">{{ element.fieldsCount }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-chip-list>
+          <mat-chip
+            color="{{ element.status ? 'primary' : 'warn' }}"
+            selected
+            >{{ element.categoryStatus }}</mat-chip
+          >
+        </mat-chip-list>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <div class="row">
+    <div class="col-md-6 col-12 order-md-1 order-2">
+      <a
+        mat-raised-button
+        color="primary"
+        class="no-decorations"
+        routerLink="/categories/new"
+        ><i class="fa fa-plus" aria-hidden="true"></i
+      ></a>
+    </div>
+    <div class="col-md-6 col-12 order-md-2 order-1">
+      <mat-paginator
+        *ngIf="dataSource"
+        [pageSizeOptions]="[10, 25, 50]"
+        showFirstLastButtons
+        (page)="onPageChange($event)"
+        [length]="categoriesCount$ | async"
+      ></mat-paginator>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <div
+    style="height: 60vh;"
+    class="w-100 d-flex justify-content-center align-items-center"
+  >
+    <mat-progress-spinner mode="indeterminate" value="50" color="primary">
+    </mat-progress-spinner>
+  </div>
+</ng-template>

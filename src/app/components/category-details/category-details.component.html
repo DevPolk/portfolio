@@ -1,0 +1,84 @@
+<form #form="ngForm" (ngSubmit)="submit()">
+  <h2>{{ isNew ? "New category" : "Edit category" }}</h2>
+  <hr />
+  <div class="row" *ngIf="category && !isLoading; else loading">
+    <div class="col-md-6">
+      <mat-form-field class="w-100">
+        <input
+          type="text"
+          placeholder="Category name"
+          id="categoryName"
+          matInput
+          name="categoryName"
+          [(ngModel)]="category.name"
+          #categoryName="ngModel"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-select
+          name="categoryStatus"
+          id="categoryStatus"
+          [(value)]="category.status"
+        >
+          <mat-option [value]="true">Enabled</mat-option>
+          <mat-option [value]="false">Disabled</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <ng-container *ngIf="category.fields.length > 0; else noFields">
+        <h4>Fields</h4>
+        <hr />
+        <div
+          class="input-group"
+          *ngFor="let field of category.fields; index as i"
+        >
+          <mat-form-field class="w-100">
+            <input
+              type="text"
+              name="field_{{ i }}"
+              matInput
+              placeholder="Field name"
+              #f="ngModel"
+              [(ngModel)]="field.name"
+              required
+            />
+            <mat-icon matSuffix>
+              <a (click)="removeField(i)">
+                <i
+                  style="color: red; cursor: pointer"
+                  class="fa fa-minus-square"
+                  aria-hidden="true"
+                ></i></a
+            ></mat-icon>
+          </mat-form-field>
+        </div>
+      </ng-container>
+
+      <ng-template #noFields>
+        <p>No fields yet.</p>
+      </ng-template>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="mr-1"
+        [disabled]="form.invalid"
+      >
+        Submit
+      </button>
+      <button mat-raised-button color="warn" type="button" (click)="addField()">
+        Add Field
+      </button>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <div
+      style="height: 60vh;"
+      class="w-100 d-flex justify-content-center align-items-center"
+    >
+      <mat-progress-spinner mode="indeterminate" value="50" color="primary">
+      </mat-progress-spinner>
+    </div>
+  </ng-template>
+</form>

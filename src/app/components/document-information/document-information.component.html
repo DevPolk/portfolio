@@ -1,0 +1,13 @@
+<h3>{{ document.name }}</h3>
+<mat-divider></mat-divider>
+<div class="row mt-4" *ngIf="document && !isLoading; loading">
+  <div class="col-md-12">
+    <div *ngFor="let value of document.values">
+      <p>{{ value.field.name }} - {{ value.content }}</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  loading...
+</ng-template>

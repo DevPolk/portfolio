@@ -1,0 +1,8 @@
+a.nav-link:hover {
+  transform: scale(0.9);
+  transition: 0.4s;
+}
+
+.sticky-top {
+  top: 6rem;
+}
