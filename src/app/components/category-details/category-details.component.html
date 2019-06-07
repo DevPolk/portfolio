@@ -13,7 +13,9 @@
           [(ngModel)]="category.name"
           #categoryName="ngModel"
           required
+          maxlength="40"
         />
+        <mat-hint align="end">{{ category.name.length }} / 40</mat-hint>
       </mat-form-field>
       <mat-form-field class="w-100">
         <mat-select

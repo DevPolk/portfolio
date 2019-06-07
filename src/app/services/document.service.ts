@@ -10,7 +10,7 @@ import { Query } from "../models/Query";
 })
 export class DocumentService {
   private url: string = isDevMode()
-    ? "https://localhost:5001/api/documents"
+    ? "http://localhost:5000/api/documents"
     : "https://universal-api.azurewebsites.net/api/documents";
 
   constructor(private http: HttpClient) {}

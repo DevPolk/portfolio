@@ -1,11 +1,45 @@
-<div class="row">
-  <div class="col-lg-6 col-12">
-    <textarea class="m-2" [(value)]="compilerInfo.script"> </textarea>
+<form #form="ngForm" (ngSubmit)="compile()">
+  <div class="row">
+    <div class="col-lg-6 col-12 mb-3">
+      <mat-form-field class="w-100 section-wrapper">
+        <mat-label>Script</mat-label>
+        <textarea
+          name="script"
+          class="code-content"
+          maxlength="1024"
+          [matAutosizeMaxRows]="35"
+          [mat-autosize]="true"
+          spellcheck="false"
+          matInput
+          [(ngModel)]="compilerInfo.script"
+          required
+        >
+        </textarea>
+        <mat-hint align="end">{{ compilerInfo.script.length }} / 1024</mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="col-lg-6 col-12 mb-3">
+      <mat-form-field class="w-100 section-wrapper">
+        <textarea
+          name="result"
+          class="code-content"
+          matInput
+          [mat-autosize]="true"
+          disabled
+          [(ngModel)]="compiledResult"
+        ></textarea>
+      </mat-form-field>
+    </div>
+    <button mat-flat-button class="mx-3" type="submit" [disabled]="!form.valid">
+      Compile & Run
+    </button>
+    <button
+      type="button"
+      mat-flat-button
+      [disabled]="script === compilerInfo.script"
+      (click)="reset()"
+    >
+      Reset
+    </button>
   </div>
-  <div class="col-lg-6 col-12">
-    <textarea class="m-2" [(value)]="compiledResult"></textarea>
-  </div>
-  <button mat-raised-button class="mx-4 my-2" (click)="compile()"></button>
-    Compile & Run
-  </button>
-</div>
+</form>

@@ -1,8 +1,8 @@
 <form #form="ngForm" (ngSubmit)="submit()">
-  <h2>{{ isNew ? "New document" : "Edit document" }}</h2>
+  <h4>{{ isNew ? "New document" : "Edit document" }}</h4>
   <mat-divider class="my-3"></mat-divider>
   <div class="row" *ngIf="document && !isLoading; else loading">
-    <div class="col-md-6 order-md-1 order-2">
+    <div class="col-lg-6 col-12 order-lg-1 order-2">
       <mat-form-field class="w-100">
         <mat-label>Document name</mat-label>
         <input
@@ -45,7 +45,7 @@
         </mat-select>
       </mat-form-field>
 
-      <h4>Categories</h4>
+      <h5>Categories</h5>
       <mat-divider class="my-3"></mat-divider>
       <ng-container *ngIf="document.categories.length > 0; else noCategories">
         <mat-accordion>
@@ -91,7 +91,7 @@
         Submit
       </button>
     </div>
-    <div class="col-md-6 order-md-2 order-1 my-md-0 mb-3">
+    <div class="col-lg-6 col-12 order-lg-2 order-1 my-lg-0 mb-3">
       <mat-card *ngIf="document.name">
         <mat-card-header>
           <mat-card-title>

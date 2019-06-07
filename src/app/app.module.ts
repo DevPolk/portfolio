@@ -1,3 +1,4 @@
+import { PopupComponent } from "./components/popup/popup.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
@@ -29,6 +30,8 @@ import { CategoryDetailsComponent } from "./components/category-details/category
 import { SummaryPipe } from "./pipes/summary.pipe";
 import { DocumentInformationComponent } from "./components/document-information/document-information.component";
 import { HomeComponent } from "./components/home/home.component";
+import { SignalRModule } from "src/modules/signalr/signalr.module";
+import { AdminAuctionComponent } from "./components/admin-auction/admin-auction.component";
 
 @NgModule({
   declarations: [
@@ -39,7 +42,9 @@ import { HomeComponent } from "./components/home/home.component";
     CategoryDetailsComponent,
     SummaryPipe,
     DocumentInformationComponent,
-    HomeComponent
+    PopupComponent,
+    HomeComponent,
+    AdminAuctionComponent
   ],
   imports: [
     MatTableModule,
@@ -66,6 +71,7 @@ import { HomeComponent } from "./components/home/home.component";
           path: "admin/items/information/:id",
           component: DocumentInformationComponent
         },
+        { path: "admin/auction", component: AdminAuctionComponent },
         { path: "admin/items/:id", component: DocumentDetailsComponent },
         { path: "admin/items", component: DocumentComponent },
         { path: "admin/categories/:id", component: CategoryDetailsComponent },
@@ -74,9 +80,11 @@ import { HomeComponent } from "./components/home/home.component";
       ],
       { useHash: true }
     ),
-    RoslynModule
+    RoslynModule,
+    SignalRModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PopupComponent]
 })
 export class AppModule {}

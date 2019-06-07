@@ -106,7 +106,7 @@ export class DocumentDetailsComponent implements OnInit {
       duration: 3000,
       data: { message: message }
     });
-    this.router.navigate(["/documents"]);
+    this.router.navigate(["/admin/items"]);
   }
 
   categoryChange() {

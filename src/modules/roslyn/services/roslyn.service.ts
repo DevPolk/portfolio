@@ -16,7 +16,6 @@ export class RoslynService {
   }
 
   public Compile(compilerInfo: CompilerInfo): Observable<any> {
-    console.log(compilerInfo);
     return this.http.post(`${this.url}/compile`, compilerInfo);
   }
 }

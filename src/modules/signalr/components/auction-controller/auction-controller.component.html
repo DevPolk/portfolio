@@ -1,0 +1,7 @@
+<div class="col-md-6">
+  <div class="w-100" *ngFor="let auctionItem of auctionItems">
+    <button mat-flat-button (click)="init(auctionItem)">
+      Begin {{ auctionItem.name }}
+    </button>
+  </div>
+</div>

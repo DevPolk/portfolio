@@ -79,7 +79,7 @@ export class CategoryDetailsComponent implements OnInit {
       duration: 3000,
       data: { message: message }
     });
-    this.router.navigate(["/categories"]);
+    this.router.navigate(["/admin/categories"]);
   }
 
   ngOnDestroy() {

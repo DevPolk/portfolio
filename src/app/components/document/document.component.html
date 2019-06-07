@@ -1,5 +1,5 @@
-<h2>Documents</h2>
-<hr />
+<h4>Documents</h4>
+<mat-divider></mat-divider>
 <ng-container *ngIf="!isLoading; else loading">
   <mat-form-field class="w-100">
     <mat-label>Search...</mat-label>
@@ -14,7 +14,7 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
       <td mat-cell *matCellDef="let element">
-        <a routerLink="/documents/{{ element.id }}">{{ element.name }}</a>
+        <a routerLink="/admin/items/{{ element.id }}">{{ element.name }}</a>
       </td>
     </ng-container>
 
@@ -46,7 +46,7 @@
         mat-raised-button
         color="primary"
         class="no-decorations"
-        routerLink="/documents/new"
+        routerLink="/admin/items/new"
         ><i class="fa fa-plus" aria-hidden="true"></i
       ></a>
     </div>

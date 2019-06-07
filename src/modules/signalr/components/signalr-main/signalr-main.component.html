@@ -1,3 +1,130 @@
-<p>
-  signalr-main works!
-</p>
+<ng-container>
+  <div class="row">
+    <div class="col-lg-6 col-12 order-2">
+      <mat-form-field class="w-100 my-3 section-wrapper">
+        <mat-label>Chat</mat-label>
+        <textarea
+          [matAutosizeMinRows]="20"
+          [matAutosizeMaxRows]="20"
+          matInput
+          [mat-autosize]="true"
+          class="code-content"
+          readonly
+          [(ngModel)]="messages"
+        ></textarea>
+        <button mat-button matSuffix (click)="clearChat()" class="mb-1">
+          clear
+        </button>
+      </mat-form-field>
+      <mat-form-field class="w-100 my-3 section-wrapper">
+        <mat-label>Message</mat-label>
+        <input
+          matInput
+          (keyup.enter)="postMessage(message)"
+          maxlength="50"
+          [disabled]="!userSignInStatus"
+          #message
+        />
+        <mat-hint>{{ message.value.length }} / 50</mat-hint>
+        <button
+          matSuffix
+          mat-button
+          [disabled]="!userSignInStatus || message.value.trim().length == 0"
+          (click)="postMessage(message)"
+          class="mb-2"
+        >
+          Post
+        </button>
+      </mat-form-field>
+
+      <mat-form-field class="w-100 my-2 section-wrapper">
+        <mat-label>{{
+          userSignInStatus ? "Entered Auction As" : "Enter Auction As"
+        }}</mat-label>
+        <input
+          [disabled]="userSignInStatus"
+          type="text"
+          matInput
+          (keyup.enter)="toggleSignInStatus()"
+          maxlength="40"
+          [(ngModel)]="username"
+        />
+        <mat-hint>{{ username.length }} / 40</mat-hint>
+        <button
+          matSuffix
+          mat-button
+          (click)="toggleSignInStatus()"
+          [disabled]="!username || !validateUsername()"
+          class="mb-2"
+        >
+          {{ userSignInStatus ? "Sign Out" : "Sign In" }}
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="col-lg-6 col-12 order-1">
+      <div class="row" *ngIf="auctionItems.length > 0; else noItems">
+        <div
+          class="col-md-6 col-12 p-3"
+          *ngFor="let auctionItem of auctionItems"
+        >
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>
+                <h5>{{ auctionItem.name }}</h5>
+                <h6>Starting at ${{ auctionItem.baseRate }}</h6>
+              </mat-card-title>
+              <mat-card-subtitle
+                ><small>Highest rate: {{ auctionItem["highestRate"] }}</small>
+              </mat-card-subtitle>
+            </mat-card-header>
+            <img
+              mat-card-image
+              [src]="auctionItem.imageUrl"
+              alt="Image unavailable"
+            />
+            <mat-card-actions class="m-2">
+              <mat-form-field class="w-100">
+                <mat-label>Raise rate</mat-label>
+                <input
+                  [disabled]="
+                    auctionItem.remainingTimeInSecs <= 3 || !userSignInStatus
+                  "
+                  type="number"
+                  matInput
+                  (keyup.enter)="raiseRate(rate.value, auctionItem.name)"
+                  #rate
+                />
+                <button
+                  matSuffix
+                  (click)="raiseRate(rate.value, auctionItem.name)"
+                  mat-button
+                  [disabled]="
+                    auctionItem.remainingTimeInSecs <= 3 ||
+                    !rate.value ||
+                    !userSignInStatus
+                  "
+                >
+                  {{
+                    auctionItem.remainingTimeInSecs <= 3
+                      ? "Closing..."
+                      : "Raise"
+                  }}
+                </button>
+              </mat-form-field>
+            </mat-card-actions>
+            <mat-card-footer class="text-center">
+              <p>{{ auctionItem.remainingTimeInSecs }} seconds remaining.</p>
+            </mat-card-footer>
+          </mat-card>
+        </div>
+      </div>
+      <ng-template #noItems>
+        <p>No items yet...</p>
+      </ng-template>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noItems>
+  No items yet...
+</ng-template>

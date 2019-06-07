@@ -9,6 +9,7 @@ import { CompilerInfo } from "../../models/compilerInfo";
   styleUrls: ["./roslyn-main.component.scss"]
 })
 export class RoslynMainComponent implements OnInit {
+  script: string;
   compilerInfo: CompilerInfo;
   compiledResult: any;
   defaultCodeSub: Subscription;
@@ -20,13 +21,18 @@ export class RoslynMainComponent implements OnInit {
 
     this.defaultCodeSub = this.service
       .GetDefaultCode()
-      .subscribe(response => (this.compilerInfo.script = response));
+      .subscribe(
+        response => (this.compilerInfo.script = this.script = response)
+      );
   }
 
   compile() {
-    console.log("sdf");
     this.service
       .Compile(this.compilerInfo)
       .subscribe(response => (this.compiledResult = response));
+  }
+
+  reset() {
+    this.compilerInfo.script = this.script;
   }
 }
