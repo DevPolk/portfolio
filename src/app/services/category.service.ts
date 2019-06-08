@@ -11,7 +11,7 @@ import { Query } from "../models/Query";
 export class CategoryService {
   private url: string = isDevMode()
     ? "http://localhost:5000/api/categories"
-    : "https://universal-api.azurewebsites.net/api/categories";
+    : "https://raimbeckcorp.azurewebsites.net/api/categories";
 
   constructor(private http: HttpClient) {}
 

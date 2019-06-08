@@ -12,7 +12,9 @@ import { AuctionItemStatusPair } from "../models/auctionItemStatusPair";
 })
 export class AuctionService {
   private hubConnection: signalr.HubConnection;
-  private url: string = isDevMode() ? "http://localhost:5000" : "";
+  private url: string = isDevMode()
+    ? "http://localhost:5000"
+    : "https://raimbeckcorp.azurewebsites.net";
   private messageStack = new Subject<string>();
   private rateStack = new Subject<AuctionRequestItem>();
   private timeStack = new Subject<AuctionItem>();
@@ -48,10 +50,6 @@ export class AuctionService {
         this.messageStack.next(`[${username}]: ${message}`);
       }
     );
-
-    this.hubConnection.on("AuctionItemTimeChanged", auctionItem => {
-      this.timeStack.next(auctionItem);
-    });
 
     this.hubConnection.on("AuctionItemClosed", item =>
       this.auctionItems.next(new AuctionItemStatusPair(item, false))

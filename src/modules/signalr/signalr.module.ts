@@ -6,11 +6,13 @@ import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { SignalrMainComponent } from "./components/signalr-main/signalr-main.component";
 import { AuctionControllerComponent } from "./components/auction-controller/auction-controller.component";
+import { DragDropModule } from "@angular/cdk/drag-drop";
 import {
   MatFormFieldModule,
   MatInputModule,
   MatButtonModule,
-  MatCardModule
+  MatCardModule,
+  MatDividerModule
 } from "@angular/material";
 
 @NgModule({
@@ -24,7 +26,9 @@ import {
     MatInputModule,
     MatButtonModule,
     CommonModule,
-    MatCardModule
+    MatCardModule,
+    DragDropModule,
+    MatDividerModule
   ],
   providers: [AuctionService]
 })

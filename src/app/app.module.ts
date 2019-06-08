@@ -32,6 +32,7 @@ import { DocumentInformationComponent } from "./components/document-information/
 import { HomeComponent } from "./components/home/home.component";
 import { SignalRModule } from "src/modules/signalr/signalr.module";
 import { AdminAuctionComponent } from "./components/admin-auction/admin-auction.component";
+import { ScrollSpyDirective } from "./directives/scrollspy.directive";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AdminAuctionComponent } from "./components/admin-auction/admin-auction.
     DocumentInformationComponent,
     PopupComponent,
     HomeComponent,
-    AdminAuctionComponent
+    AdminAuctionComponent,
+    ScrollSpyDirective
   ],
   imports: [
     MatTableModule,
