@@ -38,19 +38,15 @@ export class SignalrMainComponent implements OnInit, OnDestroy {
     this.$auctionItemsStream = this.service
       .auctionItemsStream()
       .subscribe(data => {
-        console.log(data);
         if (data.status) {
           data.item["interval"] = setInterval(() => {
-            console.log(data.item.remainingTimeInSecs);
             data.item.remainingTimeInSecs -= 1;
-            console.log(this.auctionItems);
             if (data.item.remainingTimeInSecs == 0)
               clearInterval(data.item["interval"]);
             this.i = data.item.remainingTimeInSecs;
           }, 1000);
 
           this.auctionItems.push(data.item);
-          console.log(this.auctionItems);
         } else {
           const index = this.auctionItems.findIndex(
             ai => ai.name == data.item.name

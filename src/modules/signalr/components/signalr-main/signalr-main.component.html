@@ -67,7 +67,7 @@
   <div class="col-lg-8 col-12 order-1">
     <div class="row" *ngIf="auctionItems.length > 0; else noItems">
       <div class="col-md-4 col-12 p-3" *ngFor="let auctionItem of auctionItems">
-        <!-- <mat-card>
+        <mat-card>
           <mat-card-header>
             <mat-card-title>
               <h5>{{ auctionItem.name }}</h5>
@@ -116,7 +116,7 @@
           <mat-card-footer class="text-center">
             <p>{{ auctionItem.remainingTimeInSecs }} seconds remaining.</p>
           </mat-card-footer>
-        </mat-card> -->
+        </mat-card>
       </div>
     </div>
     <ng-template #noItems>
@@ -124,8 +124,6 @@
     </ng-template>
   </div>
 </div>
-
-<p>{{ i }}</p>
 
 <ng-template #noItems>
   <small>Auction hasn't started yet...</small>
